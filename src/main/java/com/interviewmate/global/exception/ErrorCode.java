@@ -23,6 +23,10 @@ public enum ErrorCode {
             "유효하지 않은 토큰입니다."
     ),
 
+    FREE_PLAN_DAILY_LIMIT_EXCEEDED(
+            "무료 요금제의 일일 면접 생성 횟수를 초과했습니다."
+    ),
+
     ANALYSIS_NOT_FOUND(
             "분석 결과를 찾을 수 없습니다."
     ),

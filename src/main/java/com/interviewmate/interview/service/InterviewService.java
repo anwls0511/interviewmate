@@ -1,17 +1,19 @@
 package com.interviewmate.interview.service;
 
+import com.interviewmate.auth.domain.User;
+import com.interviewmate.global.exception.BusinessException;
+import com.interviewmate.global.exception.ErrorCode;
 import com.interviewmate.interview.domain.Interview;
 import com.interviewmate.interview.dto.request.InterviewCreateRequest;
+import com.interviewmate.interview.dto.response.InterviewDetailResponse;
 import com.interviewmate.interview.dto.response.InterviewFinishResponse;
 import com.interviewmate.interview.dto.response.InterviewListResponse;
 import com.interviewmate.interview.dto.response.InterviewResponse;
 import com.interviewmate.interview.mapper.InterviewMapper;
 import com.interviewmate.question.service.QuestionService;
+import com.interviewmate.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.interviewmate.interview.dto.response.InterviewDetailResponse;
-import com.interviewmate.global.exception.BusinessException;
-import com.interviewmate.global.exception.ErrorCode;
 
 import java.util.List;
 
@@ -23,39 +25,44 @@ public class InterviewService {
 
     private final QuestionService questionService;
 
+    private final UserMapper userMapper;
+
     public InterviewResponse createInterview(
             Long userId,
             InterviewCreateRequest request
     ) {
 
-        Interview interview =
-                new Interview();
+        User user = userMapper.findById(userId);
+
+        if (user == null) {
+            throw new BusinessException(
+                    ErrorCode.USER_NOT_FOUND
+            );
+        }
+
+        if ("FREE".equals(user.getPlanType())) {
+
+            int todayInterviewCount =
+                    interviewMapper.countTodayByUserId(userId);
+
+            if (todayInterviewCount >= 3) {
+                throw new BusinessException(
+                        ErrorCode.FREE_PLAN_DAILY_LIMIT_EXCEEDED
+                );
+            }
+        }
+
+        Interview interview = new Interview();
 
         interview.setUserId(userId);
-
         interview.setTitle(request.getTitle());
-
         interview.setJobRole(request.getJobRole());
+        interview.setCareerLevel(request.getCareerLevel());
+        interview.setTechStack(request.getTechStack());
+        interview.setDifficulty(request.getDifficulty());
+        interview.setQuestionCount(request.getQuestionCount());
 
-        interview.setCareerLevel(
-                request.getCareerLevel()
-        );
-
-        interview.setTechStack(
-                request.getTechStack()
-        );
-
-        interview.setDifficulty(
-                request.getDifficulty()
-        );
-
-        interview.setQuestionCount(
-                request.getQuestionCount()
-        );
-
-        interviewMapper.insertInterview(
-                interview
-        );
+        interviewMapper.insertInterview(interview);
 
         questionService.createDefaultQuestions(
                 interview.getInterviewId(),
@@ -67,7 +74,6 @@ public class InterviewService {
                 interview.getTitle(),
                 "READY"
         );
-
     }
 
     public List<InterviewListResponse> getMyInterviews(
@@ -84,9 +90,7 @@ public class InterviewService {
     ) {
 
         Interview interview =
-                interviewMapper.findById(
-                        interviewId
-                );
+                interviewMapper.findById(interviewId);
 
         if (interview == null) {
             throw new BusinessException(
@@ -94,16 +98,14 @@ public class InterviewService {
             );
         }
 
-        return InterviewDetailResponse.from(
-                interview
-        );
-
+        return InterviewDetailResponse.from(interview);
     }
 
     public InterviewFinishResponse finishInterview(
             Long interviewId
     ) {
-        Interview interview = interviewMapper.findById(interviewId);
+        Interview interview =
+                interviewMapper.findById(interviewId);
 
         if (interview == null) {
             throw new BusinessException(
@@ -118,5 +120,4 @@ public class InterviewService {
                 "COMPLETED"
         );
     }
-
 }

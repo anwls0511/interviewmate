@@ -92,4 +92,15 @@
 
     </update>
 
+    <select id="countTodayByUserId"
+            parameterType="long"
+            resultType="int">
+
+        SELECT COUNT(*)
+        FROM interviews
+        WHERE user_id = #{userId}
+          AND DATE(created_at) = CURDATE()
+
+    </select>
+
 </mapper>

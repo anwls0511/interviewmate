@@ -20,4 +20,6 @@ public interface InterviewMapper {
 
     int updateStatusToCompleted(Long interviewId);
 
+    int countTodayByUserId(Long userId);
+
 }
