@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.interviewmate.question.mapper.QuestionMapper">
+
+    <insert id="insertQuestion"
+            parameterType="com.interviewmate.question.domain.Question">
+        INSERT INTO questions (
+            interview_id,
+            content,
+            question_order,
+            difficulty,
+            question_type
+        )
+        VALUES (
+                   #{interviewId},
+                   #{content},
+                   #{questionOrder},
+                   #{difficulty},
+                   #{questionType}
+               )
+    </insert>
+
+    <select id="findByInterviewId"
+            parameterType="long"
+            resultType="com.interviewmate.question.domain.Question">
+        SELECT
+            question_id,
+            interview_id,
+            content,
+            question_order,
+            difficulty,
+            question_type,
+            created_at
+        FROM questions
+        WHERE interview_id = #{interviewId}
+        ORDER BY question_order ASC
+    </select>
+
+</mapper>
