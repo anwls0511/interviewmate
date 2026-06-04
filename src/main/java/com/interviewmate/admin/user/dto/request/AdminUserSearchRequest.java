@@ -16,4 +16,12 @@ public class AdminUserSearchRequest {
     private String status;
 
     private String planType;
+
+    private Integer page = 1;
+
+    private Integer size = 10;
+
+    public int getOffset() {
+        return (page - 1) * size;
+    }
 }

@@ -14,4 +14,7 @@ public interface AdminUserMapper {
 
     int updateUserStatus(@Param("userId") Long userId,
                          @Param("status") String status);
+
+    int countUsers(AdminUserSearchRequest request);
+
 }

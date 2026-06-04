@@ -57,4 +57,77 @@
 
     </update>
 
+    <select id="findUsers"
+            parameterType="com.interviewmate.admin.user.dto.request.AdminUserSearchRequest"
+            resultType="com.interviewmate.auth.domain.User">
+
+        SELECT
+        user_id,
+        email,
+        password,
+        name,
+        role,
+        plan_type,
+        status,
+        created_at,
+        updated_at
+        FROM users
+        WHERE 1 = 1
+
+        <if test="email != null and email != ''">
+            AND email LIKE CONCAT('%', #{email}, '%')
+        </if>
+
+        <if test="name != null and name != ''">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+
+        <if test="role != null and role != ''">
+            AND role = #{role}
+        </if>
+
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+
+        <if test="planType != null and planType != ''">
+            AND plan_type = #{planType}
+        </if>
+
+        ORDER BY created_at DESC
+        LIMIT #{size}
+        OFFSET #{offset}
+
+    </select>
+
+    <select id="countUsers"
+            parameterType="com.interviewmate.admin.user.dto.request.AdminUserSearchRequest"
+            resultType="int">
+
+        SELECT COUNT(*)
+        FROM users
+        WHERE 1 = 1
+
+        <if test="email != null and email != ''">
+            AND email LIKE CONCAT('%', #{email}, '%')
+        </if>
+
+        <if test="name != null and name != ''">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+
+        <if test="role != null and role != ''">
+            AND role = #{role}
+        </if>
+
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+
+        <if test="planType != null and planType != ''">
+            AND plan_type = #{planType}
+        </if>
+
+    </select>
+
 </mapper>
