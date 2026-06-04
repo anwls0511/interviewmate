@@ -19,6 +19,10 @@ public enum ErrorCode {
             "이미 가입된 이메일입니다."
     ),
 
+    REPORT_CREATE_FAILED(
+            "PDF 리포트 생성에 실패했습니다."
+    ),
+
     INVALID_TOKEN(
             "유효하지 않은 토큰입니다."
     ),
