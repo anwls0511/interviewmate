@@ -2,8 +2,8 @@ package com.interviewmate.admin.payment.service;
 
 import com.interviewmate.admin.payment.dto.request.AdminPaymentSearchRequest;
 import com.interviewmate.admin.payment.dto.response.AdminPaymentListResponse;
-import com.interviewmate.admin.payment.dto.response.AdminPaymentPageResponse;
 import com.interviewmate.admin.payment.mapper.AdminPaymentMapper;
+import com.interviewmate.global.response.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class AdminPaymentService {
 
     private final AdminPaymentMapper adminPaymentMapper;
 
-    public AdminPaymentPageResponse getPayments(
+    public PageResponse<AdminPaymentListResponse> getPayments(
             AdminPaymentSearchRequest request
     ) {
         int totalCount =
@@ -24,7 +24,7 @@ public class AdminPaymentService {
         List<AdminPaymentListResponse> payments =
                 adminPaymentMapper.findPayments(request);
 
-        return new AdminPaymentPageResponse(
+        return new PageResponse<>(
                 totalCount,
                 request.getPage(),
                 request.getSize(),
