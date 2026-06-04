@@ -21,7 +21,7 @@ pipeline {
                 sh '''
                 docker stop interviewmate || true
                 docker rm interviewmate || true
-                docker run -d --name interviewmate -p 8080:8080 interviewmate:latest
+                docker run -d --name interviewmate -p 8081:8080 interviewmate:latest
                 '''
             }
         }
