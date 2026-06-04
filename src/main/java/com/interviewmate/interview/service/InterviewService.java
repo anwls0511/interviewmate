@@ -14,6 +14,8 @@ import com.interviewmate.question.service.QuestionService;
 import com.interviewmate.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.interviewmate.interview.dto.request.InterviewSearchRequest;
+import com.interviewmate.interview.dto.response.InterviewPageResponse;
 
 import java.util.List;
 
@@ -76,13 +78,25 @@ public class InterviewService {
         );
     }
 
-    public List<InterviewListResponse> getMyInterviews(
-            Long userId
+    public InterviewPageResponse getMyInterviews(
+            Long userId,
+            InterviewSearchRequest request
     ) {
-        return interviewMapper.findByUserId(userId)
-                .stream()
-                .map(InterviewListResponse::from)
-                .toList();
+        int totalCount =
+                interviewMapper.countByUserId(userId);
+
+        List<InterviewListResponse> interviews =
+                interviewMapper.findByUserId(userId, request)
+                        .stream()
+                        .map(InterviewListResponse::from)
+                        .toList();
+
+        return new InterviewPageResponse(
+                totalCount,
+                request.getPage(),
+                request.getSize(),
+                interviews
+        );
     }
 
     public InterviewDetailResponse getInterviewDetail(

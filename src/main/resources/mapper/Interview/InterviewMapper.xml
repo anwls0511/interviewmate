@@ -59,7 +59,6 @@
     </select>
 
     <select id="findByUserId"
-            parameterType="long"
             resultType="com.interviewmate.interview.domain.Interview">
 
         SELECT
@@ -78,6 +77,8 @@
         FROM interviews
         WHERE user_id = #{userId}
         ORDER BY created_at DESC
+            LIMIT #{request.size}
+        OFFSET #{request.offset}
 
     </select>
 
@@ -100,6 +101,16 @@
         FROM interviews
         WHERE user_id = #{userId}
           AND DATE(created_at) = CURDATE()
+
+    </select>
+
+    <select id="countByUserId"
+            parameterType="long"
+            resultType="int">
+
+        SELECT COUNT(*)
+        FROM interviews
+        WHERE user_id = #{userId}
 
     </select>
 

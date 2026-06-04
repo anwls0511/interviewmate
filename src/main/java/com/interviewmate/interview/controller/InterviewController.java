@@ -4,13 +4,15 @@ import com.interviewmate.global.response.ApiResponse;
 import com.interviewmate.interview.dto.request.InterviewCreateRequest;
 import com.interviewmate.interview.dto.response.InterviewDetailResponse;
 import com.interviewmate.interview.dto.response.InterviewFinishResponse;
-import com.interviewmate.interview.dto.response.InterviewListResponse;
 import com.interviewmate.interview.dto.response.InterviewResponse;
 import com.interviewmate.interview.service.InterviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import com.interviewmate.interview.dto.request.InterviewSearchRequest;
+import com.interviewmate.interview.dto.response.InterviewPageResponse;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
@@ -60,13 +62,17 @@ public class InterviewController {
     }
 
     @GetMapping
-    public ApiResponse<List<InterviewListResponse>> getMyInterviews(
-            Authentication authentication
+    public ApiResponse<InterviewPageResponse> getMyInterviews(
+            Authentication authentication,
+            @ModelAttribute InterviewSearchRequest request
     ) {
         Long userId = (Long) authentication.getPrincipal();
 
-        List<InterviewListResponse> response =
-                interviewService.getMyInterviews(userId);
+        InterviewPageResponse response =
+                interviewService.getMyInterviews(
+                        userId,
+                        request
+                );
 
         return ApiResponse.success(response);
     }
