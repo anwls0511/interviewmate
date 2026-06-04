@@ -6,6 +6,7 @@ import com.interviewmate.auth.dto.request.LoginRequest;
 import com.interviewmate.auth.dto.request.SignupRequest;
 import com.interviewmate.auth.dto.response.LoginResponse;
 import com.interviewmate.auth.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -17,22 +18,43 @@ public class AuthController {
 
     private final AuthService authService;
 
+//    @PostMapping("/signup")
+//    public ApiResponse<Void> signup(@RequestBody SignupRequest request) {
+//        authService.signup(request);
+//
+//        return ApiResponse.success("회원가입이 완료되었습니다.", null);
+//    }
+
     @PostMapping("/signup")
-    public ApiResponse<Void> signup(@RequestBody SignupRequest request) {
+    public ApiResponse<Void> signup(@Valid @RequestBody SignupRequest request) {
         authService.signup(request);
 
         return ApiResponse.success("회원가입이 완료되었습니다.", null);
     }
 
+//    @PostMapping("/login")
+//    public ApiResponse<LoginResponse> login(@RequestBody LoginRequest request) {
+//        LoginResponse response = authService.login(request);
+//
+//        return ApiResponse.success("로그인이 완료되었습니다.", response);
+//    }
+
     @PostMapping("/login")
-    public ApiResponse<LoginResponse> login(@RequestBody LoginRequest request) {
+    public ApiResponse<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         LoginResponse response = authService.login(request);
 
         return ApiResponse.success("로그인이 완료되었습니다.", response);
     }
 
+//    @PostMapping("/refresh")
+//    public ApiResponse<LoginResponse> refresh(@RequestBody RefreshTokenRequest request) {
+//        LoginResponse response = authService.refresh(request);
+//
+//        return ApiResponse.success("토큰이 재발급되었습니다.", response);
+//    }
+
     @PostMapping("/refresh")
-    public ApiResponse<LoginResponse> refresh(@RequestBody RefreshTokenRequest request) {
+    public ApiResponse<LoginResponse> refresh(@Valid @RequestBody RefreshTokenRequest request) {
         LoginResponse response = authService.refresh(request);
 
         return ApiResponse.success("토큰이 재발급되었습니다.", response);
