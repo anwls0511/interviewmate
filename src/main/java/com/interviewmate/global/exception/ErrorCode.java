@@ -27,6 +27,10 @@ public enum ErrorCode {
             "분석 결과를 찾을 수 없습니다."
     ),
 
+    INTERVIEW_NOT_FOUND(
+            "면접 정보를 찾을 수 없습니다."
+    ),
+
     INTERNAL_SERVER_ERROR(
             "서버 오류가 발생했습니다."
     );

@@ -8,6 +8,9 @@ import com.interviewmate.interview.mapper.InterviewMapper;
 import com.interviewmate.question.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.interviewmate.interview.dto.response.InterviewDetailResponse;
+import com.interviewmate.global.exception.BusinessException;
+import com.interviewmate.global.exception.ErrorCode;
 
 import java.util.List;
 
@@ -73,6 +76,27 @@ public class InterviewService {
                 .stream()
                 .map(InterviewListResponse::from)
                 .toList();
+    }
+
+    public InterviewDetailResponse getInterviewDetail(
+            Long interviewId
+    ) {
+
+        Interview interview =
+                interviewMapper.findById(
+                        interviewId
+                );
+
+        if (interview == null) {
+            throw new BusinessException(
+                    ErrorCode.INTERVIEW_NOT_FOUND
+            );
+        }
+
+        return InterviewDetailResponse.from(
+                interview
+        );
+
     }
 
 }

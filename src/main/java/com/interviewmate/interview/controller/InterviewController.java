@@ -2,15 +2,13 @@ package com.interviewmate.interview.controller;
 
 import com.interviewmate.global.response.ApiResponse;
 import com.interviewmate.interview.dto.request.InterviewCreateRequest;
+import com.interviewmate.interview.dto.response.InterviewDetailResponse;
 import com.interviewmate.interview.dto.response.InterviewListResponse;
 import com.interviewmate.interview.dto.response.InterviewResponse;
 import com.interviewmate.interview.service.InterviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -53,5 +51,22 @@ public class InterviewController {
                 interviewService.getMyInterviews(userId);
 
         return ApiResponse.success(response);
+    }
+
+    @GetMapping("/{interviewId}")
+    public ApiResponse<InterviewDetailResponse>
+    getInterviewDetail(
+            @PathVariable Long interviewId
+    ) {
+
+        InterviewDetailResponse response =
+                interviewService.getInterviewDetail(
+                        interviewId
+                );
+
+        return ApiResponse.success(
+                response
+        );
+
     }
 }
