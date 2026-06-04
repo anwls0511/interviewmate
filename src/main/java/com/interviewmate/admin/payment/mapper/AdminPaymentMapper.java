@@ -12,4 +12,8 @@ public interface AdminPaymentMapper {
     List<AdminPaymentListResponse> findPayments(
             AdminPaymentSearchRequest request
     );
+
+    int countPayments(
+            AdminPaymentSearchRequest request
+    );
 }

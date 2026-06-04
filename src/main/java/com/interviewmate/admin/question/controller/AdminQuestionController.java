@@ -4,6 +4,7 @@ import com.interviewmate.admin.question.dto.request.AdminQuestionCreateRequest;
 import com.interviewmate.admin.question.dto.request.AdminQuestionSearchRequest;
 import com.interviewmate.admin.question.dto.request.AdminQuestionUpdateRequest;
 import com.interviewmate.admin.question.dto.response.AdminQuestionListResponse;
+import com.interviewmate.admin.question.dto.response.AdminQuestionPageResponse;
 import com.interviewmate.admin.question.dto.response.AdminQuestionResponse;
 import com.interviewmate.admin.question.service.AdminQuestionService;
 import com.interviewmate.global.response.ApiResponse;
@@ -63,10 +64,10 @@ public class AdminQuestionController {
     }
 
     @GetMapping
-    public ApiResponse<List<AdminQuestionListResponse>> getQuestions(
+    public ApiResponse<AdminQuestionPageResponse> getQuestions(
             @ModelAttribute AdminQuestionSearchRequest request
     ) {
-        List<AdminQuestionListResponse> response =
+        AdminQuestionPageResponse response =
                 adminQuestionService.getQuestions(request);
 
         return ApiResponse.success(response);

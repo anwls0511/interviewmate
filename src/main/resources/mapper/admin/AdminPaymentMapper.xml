@@ -36,6 +36,32 @@
         </if>
 
         ORDER BY p.paid_at DESC
+        LIMIT #{size}
+        OFFSET #{offset}
+
+    </select>
+
+    <select id="countPayments"
+            parameterType="com.interviewmate.admin.payment.dto.request.AdminPaymentSearchRequest"
+            resultType="int">
+
+        SELECT COUNT(*)
+        FROM payments p
+        INNER JOIN users u
+        ON p.user_id = u.user_id
+        WHERE 1 = 1
+
+        <if test="email != null and email != ''">
+            AND u.email LIKE CONCAT('%', #{email}, '%')
+        </if>
+
+        <if test="planType != null and planType != ''">
+            AND p.plan_type = #{planType}
+        </if>
+
+        <if test="status != null and status != ''">
+            AND p.status = #{status}
+        </if>
 
     </select>
 

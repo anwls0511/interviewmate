@@ -24,4 +24,6 @@ public interface AdminQuestionMapper {
     List<CompanyQuestion> findAdminQuestions(
             AdminQuestionSearchRequest request
     );
+
+    int countAdminQuestions(AdminQuestionSearchRequest request);
 }
