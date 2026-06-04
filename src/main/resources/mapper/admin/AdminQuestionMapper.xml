@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.interviewmate.admin.question.mapper.AdminQuestionMapper">
+
+    <insert id="insertQuestion"
+            parameterType="com.interviewmate.admin.question.dto.request.AdminQuestionCreateRequest"
+            useGeneratedKeys="true"
+            keyProperty="companyQuestionId">
+
+        INSERT INTO company_questions
+        (
+            company_name,
+            job_role,
+            difficulty,
+            question_content,
+            question_type,
+            is_active
+        )
+        VALUES
+            (
+                #{companyName},
+                #{jobRole},
+                #{difficulty},
+                #{questionContent},
+                #{questionType},
+                'Y'
+            )
+
+    </insert>
+
+    <update id="updateQuestion">
+
+        UPDATE company_questions
+        SET
+            company_name = #{request.companyName},
+            job_role = #{request.jobRole},
+            difficulty = #{request.difficulty},
+            question_content = #{request.questionContent},
+            question_type = #{request.questionType},
+            is_active = #{request.isActive},
+            updated_at = NOW()
+        WHERE company_question_id = #{companyQuestionId}
+
+    </update>
+
+</mapper>
