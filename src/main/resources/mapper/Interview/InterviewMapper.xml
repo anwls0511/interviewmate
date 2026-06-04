@@ -1,0 +1,29 @@
+<insert id="insertInterview"
+        parameterType="com.interviewmate.interview.domain.Interview"
+        useGeneratedKeys="true"
+        keyProperty="interviewId">
+
+    INSERT INTO interviews
+    (
+    user_id,
+    title,
+    job_role,
+    career_level,
+    tech_stack,
+    difficulty,
+    question_count,
+    status
+    )
+    VALUES
+    (
+    #{userId},
+    #{title},
+    #{jobRole},
+    #{careerLevel},
+    #{techStack},
+    #{difficulty},
+    #{questionCount},
+    'READY'
+    )
+
+</insert>
