@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.interviewmate.admin.payment.mapper.AdminPaymentMapper">
+
+    <select id="findPayments"
+            parameterType="com.interviewmate.admin.payment.dto.request.AdminPaymentSearchRequest"
+            resultType="com.interviewmate.admin.payment.dto.response.AdminPaymentListResponse">
+
+        SELECT
+        p.payment_id AS paymentId,
+        p.user_id AS userId,
+        u.email AS email,
+        p.plan_type AS planType,
+        p.amount AS amount,
+        p.status AS status,
+        p.paid_at AS paidAt
+        FROM payments p
+        INNER JOIN users u
+        ON p.user_id = u.user_id
+        WHERE 1 = 1
+
+        <if test="email != null and email != ''">
+            AND u.email LIKE CONCAT('%', #{email}, '%')
+        </if>
+
+        <if test="planType != null and planType != ''">
+            AND p.plan_type = #{planType}
+        </if>
+
+        <if test="status != null and status != ''">
+            AND p.status = #{status}
+        </if>
+
+        ORDER BY p.paid_at DESC
+
+    </select>
+
+</mapper>
