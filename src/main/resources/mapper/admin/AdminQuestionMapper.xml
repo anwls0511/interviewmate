@@ -7,9 +7,7 @@
 <mapper namespace="com.interviewmate.admin.question.mapper.AdminQuestionMapper">
 
     <insert id="insertQuestion"
-            parameterType="com.interviewmate.admin.question.dto.request.AdminQuestionCreateRequest"
-            useGeneratedKeys="true"
-            keyProperty="companyQuestionId">
+            parameterType="com.interviewmate.admin.question.dto.request.AdminQuestionCreateRequest">
 
         INSERT INTO company_questions
         (
