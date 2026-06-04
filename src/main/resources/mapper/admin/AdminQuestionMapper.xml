@@ -45,4 +45,15 @@
 
     </update>
 
+    <update id="deleteQuestion"
+            parameterType="long">
+
+        UPDATE company_questions
+        SET
+            is_active = 'N',
+            updated_at = NOW()
+        WHERE company_question_id = #{companyQuestionId}
+
+    </update>
+
 </mapper>

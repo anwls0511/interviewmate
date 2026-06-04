@@ -44,4 +44,18 @@ public class AdminQuestionController {
                 response
         );
     }
+
+    @DeleteMapping("/{companyQuestionId}")
+    public ApiResponse<AdminQuestionResponse> deleteQuestion(
+            @PathVariable Long companyQuestionId
+    ) {
+        AdminQuestionResponse response =
+                adminQuestionService.deleteQuestion(companyQuestionId);
+
+        return ApiResponse.success(
+                "질문이 삭제되었습니다.",
+                response
+        );
+    }
+
 }

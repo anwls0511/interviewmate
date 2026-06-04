@@ -14,4 +14,6 @@ public interface AdminQuestionMapper {
             @Param("companyQuestionId") Long companyQuestionId,
             @Param("request") AdminQuestionUpdateRequest request
     );
+
+    int deleteQuestion(Long companyQuestionId);
 }

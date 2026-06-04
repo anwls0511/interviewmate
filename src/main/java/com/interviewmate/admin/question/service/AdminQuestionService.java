@@ -38,4 +38,16 @@ public class AdminQuestionService {
                 "UPDATED"
         );
     }
+
+    public AdminQuestionResponse deleteQuestion(
+            Long companyQuestionId
+    ) {
+        adminQuestionMapper.deleteQuestion(companyQuestionId);
+
+        return new AdminQuestionResponse(
+                companyQuestionId,
+                "DELETED"
+        );
+    }
+
 }
