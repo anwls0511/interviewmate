@@ -21,7 +21,7 @@ pipeline {
                 sh '''
                 docker stop interviewmate || true
                 docker rm interviewmate || true
-                docker run -d --name interviewmate -p 8081:8080 interviewmate:latest
+                docker run -d --name interviewmate -p 8081:8080 -e SPRING_DATASOURCE_URL=jdbc:mariadb://interviewmate-mariadb:3306/interviewmate -e SPRING_DATASOURCE_USERNAME=interviewmate -e SPRING_DATASOURCE_PASSWORD=1234 -e SPRING_DATA_REDIS_HOST=interviewmate-redis -e SPRING_RABBITMQ_HOST=interviewmate-rabbitmq -e OPENAI_API_KEY=test interviewmate:latest
                 '''
             }
         }
