@@ -17,6 +17,7 @@ import com.interviewmate.global.response.PageResponse;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/interviews")
 public class InterviewController {
 
     private final InterviewService interviewService;
