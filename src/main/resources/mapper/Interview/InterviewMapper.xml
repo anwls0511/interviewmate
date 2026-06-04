@@ -81,4 +81,15 @@
 
     </select>
 
+    <update id="updateStatusToCompleted"
+            parameterType="long">
+
+        UPDATE interviews
+        SET
+            status = 'COMPLETED',
+            updated_at = NOW()
+        WHERE interview_id = #{interviewId}
+
+    </update>
+
 </mapper>

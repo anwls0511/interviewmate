@@ -2,6 +2,7 @@ package com.interviewmate.interview.service;
 
 import com.interviewmate.interview.domain.Interview;
 import com.interviewmate.interview.dto.request.InterviewCreateRequest;
+import com.interviewmate.interview.dto.response.InterviewFinishResponse;
 import com.interviewmate.interview.dto.response.InterviewListResponse;
 import com.interviewmate.interview.dto.response.InterviewResponse;
 import com.interviewmate.interview.mapper.InterviewMapper;
@@ -97,6 +98,25 @@ public class InterviewService {
                 interview
         );
 
+    }
+
+    public InterviewFinishResponse finishInterview(
+            Long interviewId
+    ) {
+        Interview interview = interviewMapper.findById(interviewId);
+
+        if (interview == null) {
+            throw new BusinessException(
+                    ErrorCode.INTERVIEW_NOT_FOUND
+            );
+        }
+
+        interviewMapper.updateStatusToCompleted(interviewId);
+
+        return new InterviewFinishResponse(
+                interviewId,
+                "COMPLETED"
+        );
     }
 
 }

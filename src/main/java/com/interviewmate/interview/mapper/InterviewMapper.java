@@ -18,4 +18,6 @@ public interface InterviewMapper {
 
     List<Interview> findByUserId(Long userId);
 
+    int updateStatusToCompleted(Long interviewId);
+
 }

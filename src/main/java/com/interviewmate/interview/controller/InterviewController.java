@@ -3,6 +3,7 @@ package com.interviewmate.interview.controller;
 import com.interviewmate.global.response.ApiResponse;
 import com.interviewmate.interview.dto.request.InterviewCreateRequest;
 import com.interviewmate.interview.dto.response.InterviewDetailResponse;
+import com.interviewmate.interview.dto.response.InterviewFinishResponse;
 import com.interviewmate.interview.dto.response.InterviewListResponse;
 import com.interviewmate.interview.dto.response.InterviewResponse;
 import com.interviewmate.interview.service.InterviewService;
@@ -68,5 +69,18 @@ public class InterviewController {
                 response
         );
 
+    }
+
+    @PatchMapping("/{interviewId}/finish")
+    public ApiResponse<InterviewFinishResponse> finishInterview(
+            @PathVariable Long interviewId
+    ) {
+        InterviewFinishResponse response =
+                interviewService.finishInterview(interviewId);
+
+        return ApiResponse.success(
+                "면접이 종료되었습니다.",
+                response
+        );
     }
 }
