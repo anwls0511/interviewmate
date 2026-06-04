@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.interviewmate.admin.usage.mapper.AdminAiUsageMapper">
+
+    <select id="countTotalRequests"
+            resultType="int">
+
+        SELECT COUNT(*)
+        FROM ai_analysis
+
+    </select>
+
+    <select id="countSuccessRequests"
+            resultType="int">
+
+        SELECT COUNT(*)
+        FROM ai_analysis
+        WHERE status = 'COMPLETED'
+
+    </select>
+
+    <select id="countFailRequests"
+            resultType="int">
+
+        SELECT COUNT(*)
+        FROM ai_analysis
+        WHERE status = 'FAILED'
+
+    </select>
+
+</mapper>
