@@ -2,18 +2,53 @@
 
 AI 기반 모의면접 플랫폼
 
-면접 준비 과정에서 반복적인 질문 연습과 답변 피드백을 제공하기 위해 개발한 백엔드 프로젝트입니다.
+## 프로젝트 소개
 
-사용자는 면접 유형을 선택하여 모의면접을 진행할 수 있으며, 면접 결과를 기반으로 자신의 답변을 분석하고 개선할 수 있습니다.
+InterviewMate는 사용자가 원하는 직무와 기술 스택을 선택하여
+모의 면접을 진행하고 AI 분석 결과를 제공하는 서비스입니다.
 
 ---
 
-## 프로젝트 목표
+## 주요 기능
 
-* 실제 면접 환경과 유사한 경험 제공
-* 반복 학습을 통한 면접 역량 향상
-* AI 기반 질문 생성 및 답변 분석
-* 확장 가능한 백엔드 아키텍처 설계
+### 회원
+
+- 회원가입
+- 로그인
+- JWT 인증
+- Refresh Token
+- Redis 세션 관리
+
+### 면접
+
+- 면접 생성
+- 면접 질문 자동 생성
+- 답변 저장
+- 면접 종료
+
+### AI 분석
+
+- RabbitMQ 비동기 처리
+- 답변 분석
+- 피드백 생성
+- 점수 산정
+
+### 관리자
+
+- 회원 관리
+- 질문 관리
+- 결제 관리
+- AI 사용량 관리
+
+### 결제
+
+- 요금제 조회
+- 구독 생성
+- 결제 이력 조회
+
+### 리포트
+
+- PDF 결과 다운로드
 
 ---
 
@@ -21,111 +56,77 @@ AI 기반 모의면접 플랫폼
 
 ### Backend
 
-* Java 21
-* Spring Boot 3
-* Spring Security
-* JWT
-* MyBatis
+- Java 21
+- Spring Boot
+- Spring Security
+- JWT
+- MyBatis
 
 ### Database
 
-* MariaDB
-* Redis
+- MariaDB
+- Redis
 
-### Infrastructure
+### Message Queue
 
-* Gradle
-* Git
-* GitHub
+- RabbitMQ
 
----
+### Documentation
 
-## 주요 기능
+- Swagger
 
-### 회원 관리
+### AI
 
-* 회원가입
-* 로그인
-* 로그아웃
-* 내 정보 조회
-
-### 인증 및 보안
-
-* JWT Access Token 인증
-* Redis 기반 Refresh Token 관리
-* Spring Security 적용
-
-### 면접 기능
-
-* 면접 질문 조회
-* 면접 답변 저장
-* 면접 결과 조회
-* AI 기반 질문 생성
-
-### 사용자 관리
-
-* 면접 이력 관리
-* 답변 기록 조회
-* 결과 분석 데이터 제공
+- OpenAI API
 
 ---
 
-## 프로젝트 구조
+## 시스템 아키텍처
 
-```text
-src/main/java/com/interviewmate
-
-├── auth
-│   ├── controller
-│   ├── service
-│   ├── mapper
-│   ├── dto
-│
-├── interview
-│   ├── controller
-│   ├── service
-│   ├── mapper
-│   ├── dto
-│
-├── analysis
-│
-├── answer
-│
-├── admin
-│
-└── global
-```
+Client
+↓
+Spring Boot
+↓
+RabbitMQ
+↓
+AI Analysis
+↓
+MariaDB
 
 ---
 
 ## ERD
 
-추가 예정
+(ERD 이미지 추가 예정)
 
 ---
 
 ## API 문서
 
-추가 예정
+http://localhost:8080/swagger-ui/index.html
 
 ---
 
-## 개발 현황
+## 실행 방법
 
-* [x] 회원가입
-* [x] 로그인
-* [x] JWT 인증
-* [x] 사용자 정보 조회
-* [ ] Redis Refresh Token
-* [ ] 면접 질문 기능
-* [ ] 답변 저장 기능
-* [ ] AI 질문 생성
-* [ ] 결과 분석 기능
+### DB
+
+MariaDB 실행
+
+### Redis
+
+6379 포트 실행
+
+### RabbitMQ
+
+15672 관리자 페이지
+
+### Spring Boot
+
+./gradlew bootRun
 
 ---
 
-## 개발자
+## 작성자
 
 강무진
-
-Backend Developer
