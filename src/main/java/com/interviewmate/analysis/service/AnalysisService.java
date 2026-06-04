@@ -5,6 +5,9 @@ import com.interviewmate.analysis.dto.AnalysisMessage;
 import com.interviewmate.analysis.mapper.AnalysisMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.interviewmate.analysis.dto.response.AnalysisResultResponse;
+import com.interviewmate.global.exception.BusinessException;
+import com.interviewmate.global.exception.ErrorCode;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +54,29 @@ public class AnalysisService {
         analysis.setStatus("COMPLETED");
 
         analysisMapper.insertAnalysis(
+                analysis
+        );
+
+    }
+
+    public AnalysisResultResponse getResult(
+            Long interviewId
+    ) {
+
+        Analysis analysis =
+                analysisMapper.findByInterviewId(
+                        interviewId
+                );
+
+        if (analysis == null) {
+
+            throw new BusinessException(
+                    ErrorCode.ANALYSIS_NOT_FOUND
+            );
+
+        }
+
+        return AnalysisResultResponse.from(
                 analysis
         );
 
