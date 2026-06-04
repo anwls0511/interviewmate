@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.interviewmate.analysis.mapper.AnalysisMapper">
+
+    <insert id="insertAnalysis"
+            parameterType="com.interviewmate.analysis.domain.Analysis"
+            useGeneratedKeys="true"
+            keyProperty="analysisId">
+
+        INSERT INTO ai_analysis
+        (
+            interview_id,
+            answer_id,
+            user_id,
+            professionalism_score,
+            logic_score,
+            communication_score,
+            total_score,
+            feedback,
+            improvement_answer,
+            status
+        )
+        VALUES
+            (
+                #{interviewId},
+                #{answerId},
+                #{userId},
+                #{professionalismScore},
+                #{logicScore},
+                #{communicationScore},
+                #{totalScore},
+                #{feedback},
+                #{improvementAnswer},
+                #{status}
+            )
+
+    </insert>
+
+    <select id="findByInterviewId"
+            parameterType="long"
+            resultType="com.interviewmate.analysis.domain.Analysis">
+
+        SELECT *
+        FROM ai_analysis
+        WHERE interview_id = #{interviewId}
+        ORDER BY analysis_id DESC
+            LIMIT 1
+
+    </select>
+
+</mapper>
