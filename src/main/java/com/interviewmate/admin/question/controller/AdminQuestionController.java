@@ -4,14 +4,20 @@ import com.interviewmate.admin.question.dto.request.AdminQuestionCreateRequest;
 import com.interviewmate.admin.question.dto.request.AdminQuestionSearchRequest;
 import com.interviewmate.admin.question.dto.request.AdminQuestionUpdateRequest;
 import com.interviewmate.admin.question.dto.response.AdminQuestionListResponse;
-import com.interviewmate.admin.question.dto.response.AdminQuestionPageResponse;
 import com.interviewmate.admin.question.dto.response.AdminQuestionResponse;
 import com.interviewmate.admin.question.service.AdminQuestionService;
 import com.interviewmate.global.response.ApiResponse;
+import com.interviewmate.global.response.PageResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,6 +25,16 @@ import java.util.List;
 public class AdminQuestionController {
 
     private final AdminQuestionService adminQuestionService;
+
+    @GetMapping
+    public ApiResponse<PageResponse<AdminQuestionListResponse>> getQuestions(
+            @ModelAttribute AdminQuestionSearchRequest request
+    ) {
+        PageResponse<AdminQuestionListResponse> response =
+                adminQuestionService.getQuestions(request);
+
+        return ApiResponse.success(response);
+    }
 
     @PostMapping
     public ApiResponse<AdminQuestionResponse> createQuestion(
@@ -55,22 +71,13 @@ public class AdminQuestionController {
             @PathVariable Long companyQuestionId
     ) {
         AdminQuestionResponse response =
-                adminQuestionService.deleteQuestion(companyQuestionId);
+                adminQuestionService.deleteQuestion(
+                        companyQuestionId
+                );
 
         return ApiResponse.success(
                 "질문이 삭제되었습니다.",
                 response
         );
     }
-
-    @GetMapping
-    public ApiResponse<AdminQuestionPageResponse> getQuestions(
-            @ModelAttribute AdminQuestionSearchRequest request
-    ) {
-        AdminQuestionPageResponse response =
-                adminQuestionService.getQuestions(request);
-
-        return ApiResponse.success(response);
-    }
-
 }

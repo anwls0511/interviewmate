@@ -6,10 +6,9 @@ import com.interviewmate.admin.question.dto.request.AdminQuestionUpdateRequest;
 import com.interviewmate.admin.question.dto.response.AdminQuestionListResponse;
 import com.interviewmate.admin.question.dto.response.AdminQuestionResponse;
 import com.interviewmate.admin.question.mapper.AdminQuestionMapper;
+import com.interviewmate.global.response.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.interviewmate.admin.question.dto.response.AdminQuestionPageResponse;
-import java.util.List;
 
 import java.util.List;
 
@@ -48,7 +47,9 @@ public class AdminQuestionService {
     public AdminQuestionResponse deleteQuestion(
             Long companyQuestionId
     ) {
-        adminQuestionMapper.deleteQuestion(companyQuestionId);
+        adminQuestionMapper.deleteQuestion(
+                companyQuestionId
+        );
 
         return new AdminQuestionResponse(
                 companyQuestionId,
@@ -56,7 +57,7 @@ public class AdminQuestionService {
         );
     }
 
-    public AdminQuestionPageResponse getQuestions(
+    public PageResponse<AdminQuestionListResponse> getQuestions(
             AdminQuestionSearchRequest request
     ) {
         int totalCount =
@@ -68,12 +69,11 @@ public class AdminQuestionService {
                         .map(AdminQuestionListResponse::from)
                         .toList();
 
-        return new AdminQuestionPageResponse(
+        return new PageResponse<>(
                 totalCount,
                 request.getPage(),
                 request.getSize(),
                 questions
         );
     }
-
 }
