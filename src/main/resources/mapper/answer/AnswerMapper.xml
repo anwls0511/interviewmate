@@ -26,4 +26,22 @@
                )
     </insert>
 
+    <select id="findById"
+            parameterType="long"
+            resultType="com.interviewmate.answer.domain.Answer">
+
+        SELECT
+            answer_id,
+            interview_id,
+            question_id,
+            user_id,
+            answer_text,
+            audio_url,
+            created_at,
+            updated_at
+        FROM answers
+        WHERE answer_id = #{answerId}
+
+    </select>
+
 </mapper>

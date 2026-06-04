@@ -31,6 +31,10 @@ public enum ErrorCode {
             "면접 정보를 찾을 수 없습니다."
     ),
 
+    ANSWER_NOT_FOUND(
+            "답변 정보를 찾을 수 없습니다."
+    ),
+
     INTERNAL_SERVER_ERROR(
             "서버 오류가 발생했습니다."
     );

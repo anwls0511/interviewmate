@@ -7,4 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface AnswerMapper {
 
     int insertAnswer(Answer answer);
+
+    Answer findById(Long answerId);
+
 }
