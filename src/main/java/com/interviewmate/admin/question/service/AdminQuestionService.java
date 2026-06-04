@@ -1,11 +1,15 @@
 package com.interviewmate.admin.question.service;
 
 import com.interviewmate.admin.question.dto.request.AdminQuestionCreateRequest;
+import com.interviewmate.admin.question.dto.request.AdminQuestionSearchRequest;
 import com.interviewmate.admin.question.dto.request.AdminQuestionUpdateRequest;
+import com.interviewmate.admin.question.dto.response.AdminQuestionListResponse;
 import com.interviewmate.admin.question.dto.response.AdminQuestionResponse;
 import com.interviewmate.admin.question.mapper.AdminQuestionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -48,6 +52,15 @@ public class AdminQuestionService {
                 companyQuestionId,
                 "DELETED"
         );
+    }
+
+    public List<AdminQuestionListResponse> getQuestions(
+            AdminQuestionSearchRequest request
+    ) {
+        return adminQuestionMapper.findAdminQuestions(request)
+                .stream()
+                .map(AdminQuestionListResponse::from)
+                .toList();
     }
 
 }
