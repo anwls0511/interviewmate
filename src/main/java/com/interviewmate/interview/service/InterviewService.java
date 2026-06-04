@@ -3,6 +3,7 @@ package com.interviewmate.interview.service;
 import com.interviewmate.auth.domain.User;
 import com.interviewmate.global.exception.BusinessException;
 import com.interviewmate.global.exception.ErrorCode;
+import com.interviewmate.global.response.PageResponse;
 import com.interviewmate.interview.domain.Interview;
 import com.interviewmate.interview.dto.request.InterviewCreateRequest;
 import com.interviewmate.interview.dto.response.InterviewDetailResponse;
@@ -15,7 +16,6 @@ import com.interviewmate.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.interviewmate.interview.dto.request.InterviewSearchRequest;
-import com.interviewmate.interview.dto.response.InterviewPageResponse;
 
 import java.util.List;
 
@@ -78,7 +78,7 @@ public class InterviewService {
         );
     }
 
-    public InterviewPageResponse getMyInterviews(
+    public PageResponse<InterviewListResponse> getMyInterviews(
             Long userId,
             InterviewSearchRequest request
     ) {
@@ -91,7 +91,7 @@ public class InterviewService {
                         .map(InterviewListResponse::from)
                         .toList();
 
-        return new InterviewPageResponse(
+        return new PageResponse<>(
                 totalCount,
                 request.getPage(),
                 request.getSize(),

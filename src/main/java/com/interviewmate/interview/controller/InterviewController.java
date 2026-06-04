@@ -11,10 +11,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import com.interviewmate.interview.dto.request.InterviewSearchRequest;
-import com.interviewmate.interview.dto.response.InterviewPageResponse;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
-import java.util.List;
+import com.interviewmate.interview.dto.response.InterviewListResponse;
+import com.interviewmate.global.response.PageResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -62,13 +61,13 @@ public class InterviewController {
     }
 
     @GetMapping
-    public ApiResponse<InterviewPageResponse> getMyInterviews(
+    public ApiResponse<PageResponse<InterviewListResponse>> getMyInterviews(
             Authentication authentication,
             @ModelAttribute InterviewSearchRequest request
     ) {
         Long userId = (Long) authentication.getPrincipal();
 
-        InterviewPageResponse response =
+        PageResponse<InterviewListResponse> response =
                 interviewService.getMyInterviews(
                         userId,
                         request
