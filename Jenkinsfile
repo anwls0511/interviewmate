@@ -3,13 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Git Clone') {
-            steps {
-                git branch: 'main',
-                url: 'https://github.com/anwls0511/interviewmate.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 sh 'chmod +x gradlew'
@@ -17,5 +10,21 @@ pipeline {
             }
         }
 
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t interviewmate:latest .'
+            }
+        }
+
+    }
+
+    post {
+        success {
+            echo 'Docker Build Success'
+        }
+
+        failure {
+            echo 'Docker Build Failed'
+        }
     }
 }
