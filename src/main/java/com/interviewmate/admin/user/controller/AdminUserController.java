@@ -2,10 +2,11 @@ package com.interviewmate.admin.user.controller;
 
 import com.interviewmate.admin.user.dto.request.AdminUserSearchRequest;
 import com.interviewmate.admin.user.dto.request.AdminUserStatusUpdateRequest;
-import com.interviewmate.admin.user.dto.response.AdminUserPageResponse;
+import com.interviewmate.admin.user.dto.response.AdminUserListResponse;
 import com.interviewmate.admin.user.dto.response.AdminUserStatusResponse;
 import com.interviewmate.admin.user.service.AdminUserService;
 import com.interviewmate.global.response.ApiResponse;
+import com.interviewmate.global.response.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,10 +24,10 @@ public class AdminUserController {
     private final AdminUserService adminUserService;
 
     @GetMapping
-    public ApiResponse<AdminUserPageResponse> getUsers(
+    public ApiResponse<PageResponse<AdminUserListResponse>> getUsers(
             @ModelAttribute AdminUserSearchRequest request
     ) {
-        AdminUserPageResponse response =
+        PageResponse<AdminUserListResponse> response =
                 adminUserService.getUsers(request);
 
         return ApiResponse.success(response);

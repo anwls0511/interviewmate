@@ -3,9 +3,9 @@ package com.interviewmate.admin.user.service;
 import com.interviewmate.admin.user.dto.request.AdminUserSearchRequest;
 import com.interviewmate.admin.user.dto.request.AdminUserStatusUpdateRequest;
 import com.interviewmate.admin.user.dto.response.AdminUserListResponse;
-import com.interviewmate.admin.user.dto.response.AdminUserPageResponse;
 import com.interviewmate.admin.user.dto.response.AdminUserStatusResponse;
 import com.interviewmate.admin.user.mapper.AdminUserMapper;
+import com.interviewmate.global.response.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class AdminUserService {
 
     private final AdminUserMapper adminUserMapper;
 
-    public AdminUserPageResponse getUsers(
+    public PageResponse<AdminUserListResponse> getUsers(
             AdminUserSearchRequest request
     ) {
         int totalCount =
@@ -29,7 +29,7 @@ public class AdminUserService {
                         .map(AdminUserListResponse::from)
                         .toList();
 
-        return new AdminUserPageResponse(
+        return new PageResponse<>(
                 totalCount,
                 request.getPage(),
                 request.getSize(),
