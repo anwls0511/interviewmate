@@ -10,6 +10,7 @@ import com.interviewmate.interview.service.InterviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -19,27 +20,43 @@ public class InterviewController {
 
     private final InterviewService interviewService;
 
-    @PostMapping
-    public ApiResponse<InterviewResponse>
-    createInterview(
-            Authentication authentication,
-            @RequestBody InterviewCreateRequest request
-    ) {
+//    @PostMapping
+//    public ApiResponse<InterviewResponse>
+//    createInterview(
+//            Authentication authentication,
+//            @RequestBody InterviewCreateRequest request
+//    ) {
+//
+//        Long userId =
+//                (Long) authentication.getPrincipal();
+//
+//        InterviewResponse response =
+//                interviewService.createInterview(
+//                        userId,
+//                        request
+//                );
+//
+//        return ApiResponse.success(
+//                "면접이 생성되었습니다.",
+//                response
+//        );
+//
+//    }
 
-        Long userId =
-                (Long) authentication.getPrincipal();
+    @PostMapping
+    public ApiResponse<InterviewResponse> createInterview(
+            Authentication authentication,
+            @Valid @RequestBody InterviewCreateRequest request
+    ) {
+        Long userId = (Long) authentication.getPrincipal();
 
         InterviewResponse response =
-                interviewService.createInterview(
-                        userId,
-                        request
-                );
+                interviewService.createInterview(userId, request);
 
         return ApiResponse.success(
                 "면접이 생성되었습니다.",
                 response
         );
-
     }
 
     @GetMapping
@@ -83,4 +100,6 @@ public class InterviewController {
                 response
         );
     }
+
+
 }
