@@ -2,11 +2,14 @@ package com.interviewmate.interview.service;
 
 import com.interviewmate.interview.domain.Interview;
 import com.interviewmate.interview.dto.request.InterviewCreateRequest;
+import com.interviewmate.interview.dto.response.InterviewListResponse;
 import com.interviewmate.interview.dto.response.InterviewResponse;
 import com.interviewmate.interview.mapper.InterviewMapper;
 import com.interviewmate.question.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -61,6 +64,15 @@ public class InterviewService {
                 "READY"
         );
 
+    }
+
+    public List<InterviewListResponse> getMyInterviews(
+            Long userId
+    ) {
+        return interviewMapper.findByUserId(userId)
+                .stream()
+                .map(InterviewListResponse::from)
+                .toList();
     }
 
 }

@@ -1,29 +1,84 @@
-<insert id="insertInterview"
-        parameterType="com.interviewmate.interview.domain.Interview"
-        useGeneratedKeys="true"
-        keyProperty="interviewId">
+<?xml version="1.0" encoding="UTF-8" ?>
 
-    INSERT INTO interviews
-    (
-    user_id,
-    title,
-    job_role,
-    career_level,
-    tech_stack,
-    difficulty,
-    question_count,
-    status
-    )
-    VALUES
-    (
-    #{userId},
-    #{title},
-    #{jobRole},
-    #{careerLevel},
-    #{techStack},
-    #{difficulty},
-    #{questionCount},
-    'READY'
-    )
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-</insert>
+<mapper namespace="com.interviewmate.interview.mapper.InterviewMapper">
+
+    <insert id="insertInterview"
+            parameterType="com.interviewmate.interview.domain.Interview"
+            useGeneratedKeys="true"
+            keyProperty="interviewId">
+
+        INSERT INTO interviews
+        (
+            user_id,
+            title,
+            job_role,
+            career_level,
+            tech_stack,
+            difficulty,
+            question_count,
+            status
+        )
+        VALUES
+            (
+                #{userId},
+                #{title},
+                #{jobRole},
+                #{careerLevel},
+                #{techStack},
+                #{difficulty},
+                #{questionCount},
+                'READY'
+            )
+
+    </insert>
+
+    <select id="findById"
+            parameterType="long"
+            resultType="com.interviewmate.interview.domain.Interview">
+
+        SELECT
+            interview_id,
+            user_id,
+            title,
+            job_role,
+            career_level,
+            tech_stack,
+            difficulty,
+            question_count,
+            status,
+            score,
+            created_at,
+            updated_at
+        FROM interviews
+        WHERE interview_id = #{interviewId}
+
+    </select>
+
+    <select id="findByUserId"
+            parameterType="long"
+            resultType="com.interviewmate.interview.domain.Interview">
+
+        SELECT
+            interview_id,
+            user_id,
+            title,
+            job_role,
+            career_level,
+            tech_stack,
+            difficulty,
+            question_count,
+            status,
+            score,
+            created_at,
+            updated_at
+        FROM interviews
+        WHERE user_id = #{userId}
+        ORDER BY created_at DESC
+
+    </select>
+
+</mapper>
