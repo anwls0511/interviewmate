@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.interviewmate.subscription.mapper.SubscriptionMapper">
+
+    <update id="expireActiveSubscription"
+            parameterType="long">
+
+        UPDATE subscriptions
+        SET
+            status = 'EXPIRED',
+            updated_at = NOW()
+        WHERE user_id = #{userId}
+          AND status = 'ACTIVE'
+
+    </update>
+
+    <insert id="insertSubscription"
+            parameterType="com.interviewmate.subscription.domain.Subscription"
+            useGeneratedKeys="true"
+            keyProperty="subscriptionId">
+
+        INSERT INTO subscriptions
+        (
+            user_id,
+            plan_type,
+            status,
+            expired_at
+        )
+        VALUES
+            (
+                #{userId},
+                #{planType},
+                #{status},
+                DATE_ADD(NOW(), INTERVAL 1 MONTH)
+            )
+
+    </insert>
+
+</mapper>
