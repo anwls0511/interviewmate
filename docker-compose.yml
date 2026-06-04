@@ -1,0 +1,49 @@
+services:
+  mariadb:
+    image: mariadb:11.4
+    container_name: interviewmate-mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: 1234
+      MARIADB_DATABASE: interviewmate
+      MARIADB_USER: interviewmate
+      MARIADB_PASSWORD: 1234
+    volumes:
+      - mariadb-data:/var/lib/mysql
+
+  redis:
+    image: redis:7
+    container_name: interviewmate-redis
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: interviewmate-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  app:
+    build: .
+    container_name: interviewmate-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
+      - redis
+      - rabbitmq
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://mariadb:3306/interviewmate
+      SPRING_DATASOURCE_USERNAME: interviewmate
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_RABBITMQ_HOST: rabbitmq
+      OPENAI_API_KEY: test
+
+volumes:
+  mariadb-data:
