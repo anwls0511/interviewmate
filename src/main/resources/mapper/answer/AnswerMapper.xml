@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.interviewmate.answer.mapper.AnswerMapper">
+
+    <insert id="insertAnswer"
+            parameterType="com.interviewmate.answer.domain.Answer"
+            useGeneratedKeys="true"
+            keyProperty="answerId">
+        INSERT INTO answers (
+            interview_id,
+            question_id,
+            user_id,
+            answer_text,
+            audio_url
+        )
+        VALUES (
+                   #{interviewId},
+                   #{questionId},
+                   #{userId},
+                   #{answerText},
+                   #{audioUrl}
+               )
+    </insert>
+
+</mapper>
