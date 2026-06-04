@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.interviewmate.companyquestion.mapper.CompanyQuestionMapper">
+
+    <select id="findCompanyQuestions"
+            parameterType="com.interviewmate.companyquestion.dto.request.CompanyQuestionSearchRequest"
+            resultType="com.interviewmate.companyquestion.domain.CompanyQuestion">
+
+        SELECT
+        company_question_id,
+        company_name,
+        job_role,
+        difficulty,
+        question_content,
+        question_type,
+        is_active,
+        created_at,
+        updated_at
+        FROM company_questions
+        WHERE is_active = 'Y'
+
+        <if test="companyName != null and companyName != ''">
+            AND company_name LIKE CONCAT('%', #{companyName}, '%')
+        </if>
+
+        <if test="jobRole != null and jobRole != ''">
+            AND job_role = #{jobRole}
+        </if>
+
+        <if test="difficulty != null and difficulty != ''">
+            AND difficulty = #{difficulty}
+        </if>
+
+        ORDER BY created_at DESC
+
+    </select>
+
+</mapper>
