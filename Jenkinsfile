@@ -16,15 +16,24 @@ pipeline {
             }
         }
 
+        stage('Deploy') {
+            steps {
+                sh '''
+                docker stop interviewmate || true
+                docker rm interviewmate || true
+                docker run -d --name interviewmate -p 8080:8080 interviewmate:latest
+                '''
+            }
+        }
     }
 
     post {
         success {
-            echo 'Docker Build Success'
+            echo 'InterviewMate CI/CD Success'
         }
 
         failure {
-            echo 'Docker Build Failed'
+            echo 'InterviewMate CI/CD Failed'
         }
     }
 }
