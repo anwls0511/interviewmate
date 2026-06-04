@@ -47,4 +47,14 @@
 
     </select>
 
+    <update id="updateUserStatus">
+
+        UPDATE users
+        SET
+            status = #{status},
+            updated_at = NOW()
+        WHERE user_id = #{userId}
+
+    </update>
+
 </mapper>
