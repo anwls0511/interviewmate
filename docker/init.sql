@@ -28,10 +28,10 @@ CREATE TABLE IF NOT EXISTS interviews (
 CREATE TABLE IF NOT EXISTS questions (
                                          question_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                          interview_id BIGINT NOT NULL,
-                                         question_content TEXT NOT NULL,
-                                         question_type VARCHAR(30) NOT NULL DEFAULT 'TECH',
-    difficulty VARCHAR(20) NOT NULL,
-    sequence INT NOT NULL,
+                                         content TEXT NOT NULL,
+                                         question_order INT NOT NULL,
+                                         difficulty VARCHAR(20) NOT NULL,
+    question_type VARCHAR(30) NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 
